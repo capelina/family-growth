@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  # 默认使用 MySQL 数据源（连接参数见 application-mysql.yml，可用环境变量 DB_* 覆盖）
+  profiles:
+    active: mysql
+  application:
+    name: family-growth
+  # 开发期禁用静态资源缓存，改完前端刷新即可生效
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          max-age: 0
+          no-cache: true
+  datasource:
+    url: jdbc:h2:file:./data/family-growth;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 80MB
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
+app:
+  upload-dir: ./data/uploads
+
+logging:
+  level:
+    root: info
+    org.hibernate.SQL: warn
